@@ -11,16 +11,8 @@
       <ul id="list" class="comments">
       </ul>
       <div class="add-form">
-        <input id="name-input"
-          type="text"
-          class="add-form-name"
-          placeholder="Введите ваше имя"
-        />
-        <textarea id="text-input"
-          type="textarea"
-          class="add-form-text"
-          placeholder="Введите ваш коментарий"
-          rows="4"
+        <input id="name-input" type="text" class="add-form-name" placeholder="Введите ваше имя" />
+        <textarea id="text-input" type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"
         ></textarea>
         <div class="add-form-row">
           <button id="comment-button" class="add-form-button">Написать</button>
@@ -32,6 +24,12 @@
     .error {
       background-color: rgb(221, 87, 87);
     }
+    
+    .quote {
+      box-sizing: border-box;
+      background-color: white;
+    }
+    
   </style>
   <script>
     "use strict";
@@ -55,7 +53,7 @@
       {
         name: "Варвара",
         date: "13.02.22 19:22",
-        text: "Мне нравится как оформлена эта страница!",
+        text: "Мне нравится как оформлена эта страница! ❤",
         isLike: "75",
         isLiked: false,
       },
@@ -70,7 +68,7 @@
             <div>${comment.date}</div>
           </div>
           <div class="comment-body">
-            <div class="comment-text">
+            <div class="comment-text" data-index="${index}">
               ${comment.text}
             </div>
           </div>
@@ -84,6 +82,20 @@
       }).join('');
       
       addComment.innerHTML = commentsHtml;
+
+    const commentsElements = document.querySelectorAll(".comment-text");
+    for (const commentElement of commentsElements) {
+      commentElement.addEventListener("click", () => {
+        const index = commentElement.dataset.index;
+        if (index !== null) {
+          const comment = comments[index];
+          textInput.value = `> ${comment.text} \n ${comment.name}.,`;
+        renderComments();
+        comment.text.replace("<div class='quote'</div>");
+        const styleQuote = document.querySelectorAll(".quote");
+        }
+      });
+    }
 
     // Добавляем обработчик событий для кнопок лайка
     const likeButtons = document.querySelectorAll(".like-button");
@@ -100,7 +112,6 @@
           comment.isLike--;
         }
         
-
       renderComments(); // После обновления лайков перерисовываем комментарии
 
         }
@@ -125,17 +136,22 @@
         return;
       }
         comments.push({
-        name: nameInput.value,
+        name: nameInput.value
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;"),
         date: formatedDate,
-        text: textInput.value,
+        text: textInput.value
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;"),
         isLike: 0,
         isLiked: false,
       });
       
+      
       renderComments();
 
-        nameInput.value = "";
-        textInput.value = "";
+        nameInput.value = ""
+        textInput.value = ""
     });
 
     console.log("It works!");
