@@ -175,11 +175,11 @@
         .replaceAll('"', "&quot;"),
         Likes: 0,
         isLiked: false,
-        forceError: true, //для проверки 500 ошибки
+        // forceError: true, //для проверки 500 ошибки
       }),
       })
       .then((response) => {
-          console.log(response);
+          // console.log(response);
           if (response.status === 500) {
              throw new Error("Сервер сломался");
           }
@@ -203,14 +203,14 @@
         document.getElementById("add-form").style.display = 'flex';
         document.getElementById("add-loader-comment").style.display = 'none';
           if (error.message === "Сервер сломался") {
-            alert('Кажется, у вас сломался интернет, попробуйте позже');
+            alert('Сервер сломался, попробуйте позже');
           }
           if (error.message === "Плохой запрос") {
             alert('Имя и комментарий должны быть не короче 3х символов');
           }
-          else {
-            alert("Кажется у вас сломался интернет, попробуйте позже")
-          }
+          // else {
+          //   alert("Кажется у вас сломался интернет, попробуйте позже")
+          // }
           // TODO: Отправлять в систему сбора ошибок
           console.log(error);
         });
