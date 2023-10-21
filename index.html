@@ -46,14 +46,16 @@
 
     document.getElementById("add-loader-comment").style.display = 'none';
 
+
     // let likesCounter = document.getElementById("likes-counter");
     // likesCounter = 0; // наверное это не нужно 
 
     let comments = [];
+    const baseURL = "https://wedev-api.sky.pro/api/v1/dmitriy-panfilov/comments";
 
     const getRenderComments = () => {
 
-    return fetch("https://wedev-api.sky.pro/api/v1/dmitriy-panfilov/comments", {
+    return fetch(baseURL, {
       method: "GET",
     }).then((response) => {
         response.json().then((responseData) => {
@@ -142,10 +144,7 @@
 
     addCommentButton.addEventListener("click", () => {
 
-    //Убираем форму ввода при клике кнопку Написать
-    document.getElementById("add-form").style.display = 'none';
-    addLoaderComment.style.display = true;
-    document.getElementById("add-loader-comment").style.display = 'block';
+    
 
       
       nameInput.classList.remove("error");
@@ -158,8 +157,13 @@
         textInput.classList.add("error");
         return;
       }
+    //Убираем форму ввода при клике кнопку Написать
+      document.getElementById("add-form").style.display = 'none'; 
+      addLoaderComment.style.display = true;
+      document.getElementById("add-loader-comment").style.display = 'block';
+
       function postTask(text) {
-        return fetch("https://wedev-api.sky.pro/api/v1/dmitriy-panfilov/comments", {
+        return fetch(baseURL, {
       method: "POST",
       body: JSON.stringify({
          name: nameInput.value
@@ -218,9 +222,6 @@
       
       postTask();
       renderComments();
-    
-
-
        
     });
 
