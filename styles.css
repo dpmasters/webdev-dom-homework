@@ -141,4 +141,35 @@ body {
     opacity: 0.9;
   }
 
+  .add-form-button-login {
+    width: 600px;
+    }
+    
+    .error {
+      background-color: coral;
+    }
+    
+    .quote {
+      box-sizing: border-box;
+      background-color: gray;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .-loading-like {
+      animation: rotating 2s linear infinite;
+    }
+    
+    .login-link {
+      font-family: Helvetica;
+      color: #ffffff;
+      text-decoration: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 16px;
+    }
   

@@ -1,4 +1,5 @@
 import { getComments, postApi } from "./api.js";
+import { renderLogin } from "./loginPage.js";
 import { renderComments } from "./renderComments.js";
 
     const addCommentButton = document.getElementById("comment-button");
@@ -17,11 +18,10 @@ import { renderComments } from "./renderComments.js";
   }
 
     document.getElementById("add-loader-comment").style.display = 'none';
-
+    //Массив с данными комменатриев
     let comments = [];
-
-    const getRenderComments = () => {
-
+  // Главная страница
+    export const getRenderComments = () => {
     getComments().then((responseData) => {
         comments = responseData.comments.map((comment) => {
           const apiDate = comment.date;
@@ -35,11 +35,14 @@ import { renderComments } from "./renderComments.js";
         });
         loaderComment.style.display = 'none';
         // получили данные и рендерим их в приложении
-        renderComments({ comments });
       });
     };
 
-    renderComments({ comments });
+    // renderComments({ comments });
+    renderLogin({ getRenderComments });
+
+
+    
     
     addCommentButton.addEventListener("click", () => {
 
@@ -59,6 +62,7 @@ import { renderComments } from "./renderComments.js";
       addLoaderComment.style.display = true;
       document.getElementById("add-loader-comment").style.display = 'block';
       
+      // Создание нового комментария
       function postTask() {
       postApi({ 
         text: textInput.value,
@@ -95,3 +99,4 @@ import { renderComments } from "./renderComments.js";
     });
 
     getRenderComments();
+    
