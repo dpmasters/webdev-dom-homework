@@ -17,7 +17,7 @@ import { renderComments } from "./renderComments.js";
           + (new Date(apiDate).getSeconds() < 10 ? '0' + new Date(apiDate).getSeconds() : new Date(apiDate).getSeconds())
   }
 
-    document.getElementById("add-loader-comment").style.display = 'none';
+    // document.getElementById("add-loader-comment").style.display = 'none'; // при открытии перестает отрисовываться логин и регистрация
     //Массив с данными комменатриев
     let comments = [];
   // Главная страница
