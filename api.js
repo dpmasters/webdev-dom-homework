@@ -56,7 +56,7 @@ export function postApi({ text, name, date }) {
 }
 
 export function login({ login, password }) {
-   return fetch(uthorizURL, {
+   return fetch(authorizURL, {
       method: "POST",
       body: JSON.stringify({
       login,

@@ -35,10 +35,11 @@ import { renderComments } from "./renderComments.js";
         });
         loaderComment.style.display = 'none';
         // получили данные и рендерим их в приложении
+    renderComments({ comments });
+
       });
     };
 
-    // renderComments({ comments });
     renderLogin({ getRenderComments });
 
 

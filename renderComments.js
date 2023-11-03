@@ -4,7 +4,7 @@ const addComment = document.getElementById("list");
 const textInput = document.getElementById("text-input");
 
 
-export const renderComments = ({ comments, getRenderComments }) => {
+export const renderComments = ({ comments }) => {
   const appElement = document.getElementById("app");
     const commentsHtml = comments
     .map((comment, index) => {

@@ -1,4 +1,4 @@
-import { renderLogin } from "./loginPage";
+import { renderLogin } from "./loginPage.js";
 
 
 
