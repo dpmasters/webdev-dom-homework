@@ -37,5 +37,5 @@ import { renderComments } from "./renderComments.js";
     renderLogin({ getRenderComments });
 
 
-    // getRenderComments();
+    getRenderComments();
     

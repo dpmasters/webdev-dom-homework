@@ -1,5 +1,6 @@
 import { postApi } from "./api.js";
 import { likeEventButton } from "./like.js";
+import { renderLogin } from "./loginPage.js";
 import { formatedDate } from "./main.js";
 
 
