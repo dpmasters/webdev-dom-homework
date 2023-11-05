@@ -1,5 +1,6 @@
 const baseURL = "https://wedev-api.sky.pro/api/v2/dmitriy-panfilov/comments";
 const authorizURL = "https://wedev-api.sky.pro/api/user/login";
+const regURL = "https://wedev-api.sky.pro/api/user";
 
 export let userName;
 export const setUserName = (newUserName) => {
@@ -63,6 +64,27 @@ export function login({ login, password }) {
       password,
       }),
    }).then((response) => {
-      return response.json();
+      console.log(response)
+      if (response.status === 400) {
+         throw new Error("Неправильный логин или пароль");
+      } 
+         return response.json();
    });
-}
+};
+
+export function registration({ login, password, name }) {
+   return fetch(regURL, {
+      method: "POST",
+      body: JSON.stringify({
+      login,
+      name,
+      password,
+      }),
+   }).then((response) => {
+      console.log(response)
+      if (response.status === 400) {
+         throw new Error("Данный логин уже занят");
+      } 
+         return response.json();
+   });
+};

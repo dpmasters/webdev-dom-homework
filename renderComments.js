@@ -1,7 +1,10 @@
+import { postApi } from "./api.js";
 import { likeEventButton } from "./like.js";
+import { formatedDate } from "./main.js";
 
-const addComment = document.getElementById("list");
-const textInput = document.getElementById("text-input");
+
+
+// const addComment = document.getElementById("list");
 
 
 export const renderComments = ({ comments }) => {
@@ -28,41 +31,98 @@ export const renderComments = ({ comments }) => {
     }).join('');
 
     const appHtml = `
-    <div class="container">
-    <ul id="comment-list" class="comments">${commentsHtml}
-    </ul>
-    <div class="loading-comment">Комментарии загружаются...</div>
-    <div class="login-alert">Чтобы добавить комментарий, <a id="authorization" href="login.html"> авторизуйтесь</a></div>
-    <div class="add-form id="add">
-      <input id="name-input"
-        type="text"
-        class="add-form-name"
-        placeholder="Введите ваше имя"
-      />
-      <textarea id="comment-input"
-        type="textarea"
-        class="add-form-text"
-        placeholder="Введите ваш коментарий"
-        rows="4"
-      ></textarea>
-      <div class="add-form-row">
-        <button id="add-button" class="add-form-button">Написать</button>
-      </div>
+  <div class="container">
+  <div id="loader-comment">Комментарии загружаются...</div>
+  <ul id="list" class="comments">${commentsHtml}</ul>
+  <div id="add-loader-comment">Комментарий добавляется...</div>
+  <div class="login-alert">Чтобы добавить комментарий, <a id="authorization" href="#"> авторизуйтесь</a></div>
+  <div class="add-form" id="add-form">
+    <input id="name-input" type="text" class="add-form-name" placeholder="Введите ваше имя" />
+    <textarea id="text-input" type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"
+    ></textarea>
+    <div class="add-form-row">
+      <button id="comment-button" class="add-form-button">Написать</button>
     </div>
-  </div>`
+    </div>
+  </div>
+  `;
 
   appElement.innerHTML = appHtml;
+
+  const loaderComment = document.getElementById("loader-comment");
+  loaderComment.style.display = 'none';
+
+
 
   const authoriz = document.getElementById("authorization");
   authoriz.addEventListener("click", () =>{
     renderLogin();
   })
   
+  const addCommentButton = document.getElementById("comment-button");
+  const nameInput = document.getElementById("name-input");
+  const textInput = document.getElementById("text-input");
+  const addLoaderComment = document.getElementById('add-loader-comment');
+
+  document.getElementById("add-loader-comment").style.display = 'none';
+
+  addCommentButton.addEventListener("click", () => {
+
+    nameInput.classList.remove("error");
+    textInput.classList.remove("error");
+    if (nameInput.value === "") {
+      nameInput.classList.add("error");
+      return;
+    }
+    if (textInput.value === "") {
+      textInput.classList.add("error");
+      return;
+    }
+
+    //Убираем форму ввода при клике кнопку Написать
+    document.getElementById("add-form").style.display = 'none';
+    addLoaderComment.style.display = true;
+    document.getElementById("add-loader-comment").style.display = 'block';
+    
+    // Создание нового комментария
+    function postTask() {
+    postApi({ 
+      text: textInput.value,
+      name: nameInput.value,
+      date: formatedDate
+     }).then(() => {
+      return getRenderComments({ comments });
+    })
+    .then(() => {
+      document.getElementById("add-form").style.display = 'flex';
+      document.getElementById("add-loader-comment").style.display = 'none';
+      nameInput.value = ""
+      textInput.value = ""
+    })
+    .catch((error) => {
+      document.getElementById("add-form").style.display = 'flex';
+      document.getElementById("add-loader-comment").style.display = 'none';
+        if (error.message === "Сервер сломался") {
+          alert('Сервер сломался, попробуйте позже');
+        }
+        if (error.message === "Плохой запрос") {
+          alert('Имя и комментарий должны быть не короче 3х символов');
+        }
+        else {
+          alert("Кажется у вас сломался интернет, попробуйте позже")
+        }
+        // TODO: Отправлять в систему сбора ошибок
+        console.log(error);
+      });
+    }
+    
+    postTask();
+    renderComments({ comments });  
+  });
 
  
-    const textInput = document.getElementById("text-input");
    
-    addComment.innerHTML = commentsHtml;
+    // addComment.innerHTML = commentsHtml;
     const styleQuote = document.querySelector(".quote");
   const commentsElements = document.querySelectorAll(".comment-text");
   for (const commentElement of commentsElements) {

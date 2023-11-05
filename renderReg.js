@@ -15,6 +15,7 @@ export function renderReg() {
             class="add-form-name"
             placeholder="Введите имя"
         />
+        <br>
         <input
             id="login-input"
             type="text"
