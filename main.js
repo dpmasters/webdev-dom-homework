@@ -14,7 +14,7 @@ import { renderComments } from "./renderComments.js";
   }
 
     //Массив с данными комменатриев
-    let comments = [];
+    export let comments = [];
   // Главная страница
     export const getRenderComments = () => {
     getComments().then((responseData) => {
@@ -34,7 +34,7 @@ import { renderComments } from "./renderComments.js";
       });
     };
 
-    renderLogin({ getRenderComments });
+    // renderLogin({ getRenderComments });
 
 
     getRenderComments();
