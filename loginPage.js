@@ -23,7 +23,7 @@ export const renderLogin = () => {
 
 const logButtonElement = document.getElementById("login-button");
 const loginInputElement = document.querySelector(".add-form-name");
-    const passwordInputElement = document.querySelector(".add-form-text");
+const passwordInputElement = document.querySelector(".add-form-text");
 
 const regLink = document.getElementById("registration");
 regLink.addEventListener("click", () => {
@@ -44,5 +44,6 @@ logButtonElement.addEventListener("click", () => {
         getRenderComments();
     })
 });
+
 
 };

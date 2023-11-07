@@ -30,8 +30,10 @@ import { renderComments } from "./renderComments.js";
         });
         // получили данные и рендерим их в приложении
     renderComments({ comments });
+    // loaderComment.style.display = 'none';
 
       });
+      
     };
 
     // renderLogin({ getRenderComments });

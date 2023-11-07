@@ -47,7 +47,8 @@ export const renderReg = () => {
             setUserName(responseData.user.name);
             console.log(userName);
         }).then(() => {
-            getRenderComments();
+            renderComments({ getRenderComments });
+
         })
     });
 };
