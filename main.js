@@ -16,6 +16,7 @@ const date = ({ apiDate }) => {
 
 //Массив с данными комменатриев
 export let comments = [];
+console.log(comments);
 // Главная страница
 export const getRenderComments = () => {
   getComments().then((responseData) => {

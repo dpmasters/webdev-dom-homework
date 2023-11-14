@@ -1,4 +1,4 @@
-const baseURL = "https://wedev-api.sky.pro/api/v2/dmitriy-panffilov/comments";
+const baseURL = "https://wedev-api.sky.pro/api/v2/dmitrii-panfilov/comments";
 const deleteURL = "https://wedev-api.sky.pro/api/v2/dmitriy-panfilov/comments/:id"
 const authorizURL = "https://wedev-api.sky.pro/api/user/login";
 const regURL = "https://wedev-api.sky.pro/api/user";
@@ -57,7 +57,7 @@ export function postApi({ text }) {
 }
 
 export function deleteComment({ index }) {
-   return fetch(deleteURL + id, {
+   return fetch("https://wedev-api.sky.pro/api/v2/dmitriy-panfilov/comments/" + id, {
       method: "DELETE",
       headers: {
          Authorization: `Bearer ${token}`,

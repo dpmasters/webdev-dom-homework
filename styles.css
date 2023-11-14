@@ -197,22 +197,22 @@ body {
       opacity: 0.8;
     }
 
-    .loader-comment,
-    .add-loader-comment {
-      font-size: 16px;
-      font-family: Helvetica;
-      color: #ffffff;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-      justify-content: center;
-      text-align: center;
-      white-space: pre-line;
-      width: 596px;
-      box-sizing: border-box;
-      background: radial-gradient(
-        75.42% 75.42% at 50% 42.37%,
-        rgba(53, 53, 53, 0) 22.92%,
-        #7334ea 100%
+     .comment-loader {
+    font-size: 32px;
+    font-family: Helvetica;
+    color: #ffffff;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    justify-content: center;
+    text-align: center;
+    white-space: pre-line;
+    width: 596px;
+    box-sizing: border-box;
+    background: radial-gradient(
+      75.42% 75.42% at 50% 42.37%,
+      rgba(53, 53, 53, 0) 22.92%,
+      #7334ea 100%
+    );
     }
   

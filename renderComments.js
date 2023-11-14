@@ -60,9 +60,6 @@ export const renderComments = ({ comments }) => {
   const loaderComment = document.getElementById("loader-comment");
   loaderComment.style.display = 'none'; //Убирает лоадер коммент загрузки
 
-  // const loginPageText = document.querySelector(".login-alert");
-
-
   const addCommentButton = document.getElementById("comment-button");
   const nameInput = document.getElementById("name-input");
   const textInput = document.getElementById("text-input");
@@ -70,7 +67,7 @@ export const renderComments = ({ comments }) => {
   const addComment = document.getElementById("list");
 
 
-  // document.getElementById("add-loader-comment").style.display = 'none'; // убирает строку комент добавляется
+  document.getElementById("add-loader-comment").style.display = 'none'; // убирает строку комент добавляется
 
   addCommentButton.addEventListener("click", () => {
 
@@ -88,7 +85,7 @@ export const renderComments = ({ comments }) => {
     //Убираем форму ввода при клике кнопку Написать
     document.getElementById("add-form").style.display = 'none';
     addLoaderComment.style.display = true;
-    document.getElementById("add-loader-comment").style.display = 'block';
+    document.getElementById("add-loader-comment").style.display = 'flex';
 
     // Создание нового комментария
     function postTask() {
@@ -130,8 +127,14 @@ export const renderComments = ({ comments }) => {
 
   //Удаление последненго комментария
 
-  const deleteButtonTlement = document.querySelector(".delete-form-button");
-  const id = deleteButtonTlement.dataset.id;
+  const deleteButtonElement = document.querySelector(".delete-form-button");
+  const id = deleteButtonElement.dataset.id;
+  let askDeleteComment = comments.pop();
+  token ? deleteButtonElement.addEventListener('click', () => {
+     askDeleteComment = confirm("Вы уверены, что хотите удалить последний комментарий?") ? comments.pop() : '';
+    renderComments();
+  })
+  : ``; 
 
   // deleteButtonTlement.addEventListener("click", () => {
   //   deleteComment({
@@ -144,13 +147,6 @@ export const renderComments = ({ comments }) => {
   //   })
   // });
 
-  token ? deleteButtonTlement.addEventListener('click', () => {
-    // const askForDeleteComment = confirm("Вы уверены, что хотите удалить последний комментарий?") ? comment.pop() : '';
-    renderComments({ comments });
-  })
-  : ``; 
-
-
   addComment.innerHTML = commentsHtml;
 
 // Ответ на комментарий
@@ -161,7 +157,6 @@ export const renderComments = ({ comments }) => {
       if (index !== null) {
         const comment = comments[index];
         textInput.value = `> ${comment.text}:\n ${comment.name}.,`;
-        comment.text.replace("<div class='quote'</div>");
       }
     });
   }
