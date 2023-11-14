@@ -172,4 +172,47 @@ body {
       align-items: center;
       font-size: 16px;
     }
+
+    .error {
+      background-color: rgb(221, 87, 87);
+    }
+    
+    .quote {
+      box-sizing: border-box;
+      background-color: white;
+    }
+
+    .delete-form-button {
+      margin-top: 24px;
+      margin-left: 24px;
+      font-size: 24px;
+      padding: 10px 20px 10px 10px;
+      background-color: #bcec30;
+      border: none;
+      border-radius: 18px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .delete-form-button:hover {
+      opacity: 0.8;
+    }
+
+    .loader-comment,
+    .add-loader-comment {
+      font-size: 16px;
+      font-family: Helvetica;
+      color: #ffffff;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      justify-content: center;
+      text-align: center;
+      white-space: pre-line;
+      width: 596px;
+      box-sizing: border-box;
+      background: radial-gradient(
+        75.42% 75.42% at 50% 42.37%,
+        rgba(53, 53, 53, 0) 22.92%,
+        #7334ea 100%
+    }
   

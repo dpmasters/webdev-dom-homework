@@ -1,4 +1,5 @@
-const baseURL = "https://wedev-api.sky.pro/api/v2/dmitriy-panfilov/comments";
+const baseURL = "https://wedev-api.sky.pro/api/v2/dmitriy-panffilov/comments";
+const deleteURL = "https://wedev-api.sky.pro/api/v2/dmitriy-panfilov/comments/:id"
 const authorizURL = "https://wedev-api.sky.pro/api/user/login";
 const regURL = "https://wedev-api.sky.pro/api/user";
 
@@ -28,19 +29,18 @@ export function getComments() {
      });
 }
 //передаем текст, дату в качестве аргумента
-export function postApi({ text, name, date }) {
+export function postApi({ text }) {
    return fetch(baseURL, {
       method: "POST",
-      body: JSON.stringify({
-      name: name.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;"),
-        date: date,
-        text: text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;"),
-        Likes: 0,
-        isLiked: false,
-      }),
       headers: {
          Authorization: `Bearer ${token}`,
        },
+      body: JSON.stringify({
+         
+        text: text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;"),
+
+      }),
+      
       })
       .then((response) => {
           console.log(response);
@@ -51,6 +51,23 @@ export function postApi({ text, name, date }) {
              throw new Error("Плохой запрос");
           }
           else {
+          return response.json();
+          }
+        });
+}
+
+export function deleteComment({ index }) {
+   return fetch(deleteURL + id, {
+      method: "DELETE",
+      headers: {
+         Authorization: `Bearer ${token}`,
+       },
+       id,
+      }).then((response) => {
+          console.log(response);
+          if (response.status === 500) {
+             throw new Error("Сервер сломался");
+          } else {
           return response.json();
           }
         });
@@ -67,12 +84,13 @@ export function login({ login, password }) {
       console.log(response)
       if (response.status === 400) {
          throw new Error("Неправильный логин или пароль");
-      } 
+      } else {
          return response.json();
+      }
    });
 };
 
-export function registration({ login, password, name }) {
+export function registration({ login, name, password }) {
    return fetch(regURL, {
       method: "POST",
       body: JSON.stringify({
@@ -84,7 +102,8 @@ export function registration({ login, password, name }) {
       console.log(response)
       if (response.status === 400) {
          throw new Error("Данный логин уже занят");
-      } 
+      } else {
          return response.json();
+      }
    });
 };
