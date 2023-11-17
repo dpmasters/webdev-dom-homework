@@ -1,5 +1,5 @@
-import { deleteComment, postApi, token, userName } from "./api.js";
-import { likeEventButton } from "./like.js";
+import { deleteComment, getComments, postApi, token, userName } from "./api.js";
+import { addLikeEventListeners } from "./like.js";
 import { renderLogin } from "./loginPage.js";
 import { formatedDate, getRenderComments } from "./main.js";
 
@@ -22,7 +22,7 @@ export const renderComments = ({ comments }) => {
         </div>
         <div class="comment-footer">
           <div class="likes">
-            <button class="like-button ${comment.isLiked ? '-active-like' : ''}" data-index="${index}"></button>
+            <button class="like-button ${comment.isLiked ? 'active-like' : ''}" data-index="${index}"></button>
             <span class="likes-counter">${comment.likes}</span>
           </div>
         </div>
@@ -30,25 +30,23 @@ export const renderComments = ({ comments }) => {
   }).join('');
 
   appHTML.innerHTML = `
+  <div id="loader-comment" class="loader-comment">Комментарии загружаются...</div>
     <ul id="list" class="comments">
     ${commentsHtml}
     </ul>
   ${!token ? `
   <div class="login-alert" id="login-alert">Чтобы добавить комментарий, <a id="authorization" href="#">авторизуйтесь</a></div>
   ` :
-      `<div id="loader-comment" class="loader-comment">Комментарии загружаются...</div>
-  <ul id="list" class="comments"></ul>
+      `  <ul id="list" class="comments"></ul>
   <div id="add-loader-comment" class="add-loader-comment">Комментарий добавляется...</div>
   <div class="add-form" id="add-form">
     <input id="name-input" type="text" class="add-form-name" disabled value=${userName} />
     <textarea id="text-input" type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"></textarea>
     <div class="add-form-row">
     <button id="comment-button" class="add-form-button">Написать</button>
-    <button id="${comments.id}" class="delete-form-button">Удалить</button>
+    <button id="${comments}" class="delete-form-button">Удалить</button>
     </div>`}
   `
-
-  // appElement.innerHTML = appHtml;
 
   if (!token) {
     const loginLink = document.getElementById("authorization");
@@ -59,15 +57,17 @@ export const renderComments = ({ comments }) => {
 
   const loaderComment = document.getElementById("loader-comment");
   loaderComment.style.display = 'none'; //Убирает лоадер коммент загрузки
+  const addComment = document.getElementById("list");
 
+  
+
+  // document.getElementById("add-loader-comment").style.display = 'none'; // убирает строку комент добавляется
+function addCommentForm () {
+  if (!token) return
   const addCommentButton = document.getElementById("comment-button");
   const nameInput = document.getElementById("name-input");
   const textInput = document.getElementById("text-input");
   const addLoaderComment = document.getElementById('add-loader-comment');
-  const addComment = document.getElementById("list");
-
-
-  document.getElementById("add-loader-comment").style.display = 'none'; // убирает строку комент добавляется
 
   addCommentButton.addEventListener("click", () => {
 
@@ -123,33 +123,32 @@ export const renderComments = ({ comments }) => {
     postTask();
     renderComments({ comments });
   });
+}
+  
 
 
-  //Удаление последненго комментария
+  // Удаление последненго комментария
 
-  const deleteButtonElement = document.querySelector(".delete-form-button");
-  const id = deleteButtonElement.dataset.id;
-  let askDeleteComment = comments.pop();
-  token ? deleteButtonElement.addEventListener('click', () => {
-     askDeleteComment = confirm("Вы уверены, что хотите удалить последний комментарий?") ? comments.pop() : '';
-    renderComments();
-  })
-  : ``; 
+  function deleteCommentForm() {
+    if (!token) return
+    const deleteButtonElement = document.querySelector(".delete-form-button");
+    deleteButtonElement.addEventListener("click", () => {
+      console.log(comments[comments.length - 1])
+      deleteComment({ id:comments[comments.length - 1].id }).then(() => {
+       getRenderComments({ comments });
+      })
+    });
+  }
+  deleteCommentForm();
+addCommentForm();
 
-  // deleteButtonTlement.addEventListener("click", () => {
-  //   deleteComment({
-  //     id,
-  //   }).then((responseData) => {
-  //     console.log(id);
-
-  //   }).then(() => {
-  //     getRenderComments();
-  //   })
-  // });
 
   addComment.innerHTML = commentsHtml;
 
 // Ответ на комментарий
+
+function replayComment () {
+  const textInput = document.getElementById("text-input");
   const commentsElements = document.querySelectorAll(".comment-text");
   for (const commentElement of commentsElements) {
     commentElement.addEventListener("click", () => {
@@ -160,8 +159,12 @@ export const renderComments = ({ comments }) => {
       }
     });
   }
+}
+ replayComment();
+  
+ addLikeEventListeners({ comments });
 
-  likeEventButton({ comments });
+  // likeEventButton({ comments });
   console.log(comments);
 
 };

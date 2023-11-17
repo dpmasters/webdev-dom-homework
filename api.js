@@ -1,5 +1,5 @@
 const baseURL = "https://wedev-api.sky.pro/api/v2/dmitrii-panfilov/comments";
-const deleteURL = "https://wedev-api.sky.pro/api/v2/dmitriy-panfilov/comments/:id"
+const deleteURL = "https://wedev-api.sky.pro/api/v2/dmitrii-panfilov/comments/"
 const authorizURL = "https://wedev-api.sky.pro/api/user/login";
 const regURL = "https://wedev-api.sky.pro/api/user";
 
@@ -56,13 +56,13 @@ export function postApi({ text }) {
         });
 }
 
-export function deleteComment({ index }) {
-   return fetch("https://wedev-api.sky.pro/api/v2/dmitriy-panfilov/comments/" + id, {
+export function deleteComment({ id }) {
+   return fetch(deleteURL + id, {
       method: "DELETE",
       headers: {
          Authorization: `Bearer ${token}`,
        },
-       id,
+      
       }).then((response) => {
           console.log(response);
           if (response.status === 500) {
@@ -71,6 +71,15 @@ export function deleteComment({ index }) {
           return response.json();
           }
         });
+}
+
+export function toggleLike({ id }) {
+   return fetch(`https://wedev-api.sky.pro/api/v2/dmitrii-panfilov/comments/${id}/toggle-like`, {
+      method: "POST",
+      headers: {
+         Authorization: `Bearer ${token}`,
+       },
+      });
 }
 
 export function login({ login, password }) {

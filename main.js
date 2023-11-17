@@ -16,13 +16,13 @@ const date = ({ apiDate }) => {
 
 //Массив с данными комменатриев
 export let comments = [];
-console.log(comments);
 // Главная страница
 export const getRenderComments = () => {
   getComments().then((responseData) => {
     comments = responseData.comments.map((comment) => {
       const apiDate = comment.date;
       return {
+        id: comment.id,
         name: comment.author.name,
         date: date({ apiDate }),
         text: comment.text,
