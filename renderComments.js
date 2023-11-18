@@ -1,4 +1,4 @@
-import { deleteComment, getComments, postApi, token, userName } from "./api.js";
+import { deleteComment, postApi, token, userName } from "./api.js";
 import { addLikeEventListeners } from "./like.js";
 import { renderLogin } from "./loginPage.js";
 import { formatedDate, getRenderComments } from "./main.js";
@@ -162,7 +162,7 @@ function replayComment () {
 }
  replayComment();
   
- addLikeEventListeners({ comments });
+addLikeEventListeners({ comments });
 
   // likeEventButton({ comments });
   console.log(comments);
