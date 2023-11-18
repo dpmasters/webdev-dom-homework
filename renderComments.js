@@ -15,7 +15,7 @@ export const renderComments = ({ comments }) => {
           <div>${comment.name}</div>
           <div>${comment.date}</div>
         </div>
-        <div class="comment-body">
+        <div class="comment-body"> 
           <div class="comment-text" data-index="${index}">
             ${comment.text}
           </div>

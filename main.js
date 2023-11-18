@@ -27,7 +27,7 @@ export const getRenderComments = () => {
         date: date({ apiDate }),
         text: comment.text,
         likes: comment.likes,
-        isLiked: false,
+        isLiked: comment.isLiked,
       }
     });
     // получили данные и рендерим их в приложении
