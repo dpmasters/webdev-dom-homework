@@ -30,7 +30,7 @@ export const renderComments = ({ comments }) => {
   }).join('');
 
   appHTML.innerHTML = `
-  <div id="loader-comment" class="loader-comment">Комментарии загружаются...</div>
+  <div id="loader-comment" class="loader-comment hidden">Комментарии загружаются...</div>
     <ul id="list" class="comments">
     ${commentsHtml}
     </ul>
@@ -53,15 +53,22 @@ export const renderComments = ({ comments }) => {
     loginLink.addEventListener("click", () => {
       renderLogin();
     })
-  }
+  };
 
-  const loaderComment = document.getElementById("loader-comment");
-  loaderComment.style.display = 'none'; //Убирает лоадер коммент загрузки
-  const addComment = document.getElementById("list");
-
+  // //Убирает лоадер коммент загрузки
+  // function loadingComments() {
+  //   const loaderComment = document.getElementById("loader-comment");
+  //   loaderComment.style.display = 'none'; 
+  // };
   
 
-  // document.getElementById("add-loader-comment").style.display = 'none'; // убирает строку комент добавляется
+
+  const addComment = document.getElementById("list");
+
+
+  document.getElementById("add-loader-comment").style.display = 'none'; // убирает строку комент добавляется
+
+
 function addCommentForm () {
   if (!token) return
   const addCommentButton = document.getElementById("comment-button");
