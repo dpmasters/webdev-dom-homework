@@ -34,7 +34,7 @@ export const renderComments = ({ comments }) => {
   <div class="login-alert" id="login-alert">Чтобы добавить комментарий, <a id="authorization" href="#">авторизуйтесь</a></div>
   ` :
       `  <ul id="list" class="comments"></ul>
-  <div id="add-loader-comment" class="add-loader-comment hidden">Комментарий добавляется...</div>
+  <div id="add-loader-comment" class="add-loader-comment">Комментарий добавляется...</div>
   <div class="add-form" id="add-form">
     <input id="name-input" type="text" class="add-form-name" disabled value=${userName} />
     <textarea id="text-input" type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"></textarea>
@@ -43,6 +43,10 @@ export const renderComments = ({ comments }) => {
     <button id="${comments}" class="delete-form-button">Удалить</button>
     </div>`}
   `
+
+  if(token) {
+    document.getElementById("add-loader-comment").style.display = 'none';
+  }
 
   if (!token) {
     const loginLink = document.getElementById("authorization");
@@ -73,6 +77,7 @@ function addCommentForm () {
 
     //Убираем форму ввода при клике кнопку Написать
   document.getElementById("add-form").style.display = 'none';
+  document.getElementById("add-loader-comment").style.display = 'block';
 
   const plusLoaderComment = document.querySelector(".add-loader-comment");
 
@@ -99,10 +104,10 @@ function addCommentForm () {
         return getRenderComments({ comments });
       })
         .then(() => {
-          // document.getElementById("add-form").style.display = 'flex';
-          // document.getElementById("add-loader-comment").style.display = 'none';
-          plusLoaderComment.classList.remove("hidden");
-
+          getRenderComments({ comments });
+          document.getElementById("add-form").style.display = 'flex';
+          document.getElementById("add-loader-comment").style.display = 'none';
+          // plusLoaderComment.classList.remove("hidden");
           nameInput.value = ""
           textInput.value = ""
         })
@@ -123,7 +128,6 @@ function addCommentForm () {
         });
     }
     postTask();
-    renderComments({ comments });
   });
 }
   // Удаление последненго комментария
