@@ -3,10 +3,6 @@ import { addLikeEventListeners } from "./like.js";
 import { renderLogin } from "./loginPage.js";
 import { formatedDate, getRenderComments } from "./main.js";
 
-
-
-
-
 export const renderComments = ({ comments }) => {
   const appHTML = document.getElementById("app");
   const commentsHtml = comments.map((comment, index) => {
@@ -38,7 +34,7 @@ export const renderComments = ({ comments }) => {
   <div class="login-alert" id="login-alert">Чтобы добавить комментарий, <a id="authorization" href="#">авторизуйтесь</a></div>
   ` :
       `  <ul id="list" class="comments"></ul>
-  <div id="add-loader-comment" class="add-loader-comment">Комментарий добавляется...</div>
+  <div id="add-loader-comment" class="add-loader-comment hidden">Комментарий добавляется...</div>
   <div class="add-form" id="add-form">
     <input id="name-input" type="text" class="add-form-name" disabled value=${userName} />
     <textarea id="text-input" type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"></textarea>
@@ -55,20 +51,14 @@ export const renderComments = ({ comments }) => {
     })
   };
 
-  // //Убирает лоадер коммент загрузки
-  // function loadingComments() {
-  //   const loaderComment = document.getElementById("loader-comment");
-  //   loaderComment.style.display = 'none'; 
-  // };
-  
-
-
   const addComment = document.getElementById("list");
 
 
-  document.getElementById("add-loader-comment").style.display = 'none'; // убирает строку комент добавляется
+// убирает строку комент добавляется, если расскоментировать не добавляется новый коммент и форма нового коммента
+  //   document.getElementById("add-loader-comment").style.display = 'none';
 
 
+  // Добавляем новый комментарий
 function addCommentForm () {
   if (!token) return
   const addCommentButton = document.getElementById("comment-button");
@@ -76,7 +66,16 @@ function addCommentForm () {
   const textInput = document.getElementById("text-input");
   const addLoaderComment = document.getElementById('add-loader-comment');
 
+
+// addLoaderComment.style.display = true; // ??? проверить логику
+
   addCommentButton.addEventListener("click", () => {
+
+    //Убираем форму ввода при клике кнопку Написать
+  document.getElementById("add-form").style.display = 'none';
+
+  const plusLoaderComment = document.querySelector(".add-loader-comment");
+
 
     nameInput.classList.remove("error");
     textInput.classList.remove("error");
@@ -88,11 +87,7 @@ function addCommentForm () {
       textInput.classList.add("error");
       return;
     }
-
-    //Убираем форму ввода при клике кнопку Написать
-    document.getElementById("add-form").style.display = 'none';
-    addLoaderComment.style.display = true;
-    document.getElementById("add-loader-comment").style.display = 'flex';
+    plusLoaderComment.classList.add("hidden");
 
     // Создание нового комментария
     function postTask() {
@@ -104,8 +99,9 @@ function addCommentForm () {
         return getRenderComments({ comments });
       })
         .then(() => {
-          document.getElementById("add-form").style.display = 'flex';
-          document.getElementById("add-loader-comment").style.display = 'none';
+          // document.getElementById("add-form").style.display = 'flex';
+          // document.getElementById("add-loader-comment").style.display = 'none';
+          plusLoaderComment.classList.remove("hidden");
 
           nameInput.value = ""
           textInput.value = ""
@@ -126,16 +122,11 @@ function addCommentForm () {
           console.log(error);
         });
     }
-
     postTask();
     renderComments({ comments });
   });
 }
-  
-
-
   // Удаление последненго комментария
-
   function deleteCommentForm() {
     if (!token) return
     const deleteButtonElement = document.querySelector(".delete-form-button");
@@ -151,9 +142,7 @@ addCommentForm();
 
 
   addComment.innerHTML = commentsHtml;
-
 // Ответ на комментарий
-
 function replayComment () {
   const textInput = document.getElementById("text-input");
   const commentsElements = document.querySelectorAll(".comment-text");
@@ -167,11 +156,6 @@ function replayComment () {
     });
   }
 }
- replayComment();
-  
+replayComment();
 addLikeEventListeners({ comments });
-
-  // likeEventButton({ comments });
-  console.log(comments);
-
 };
