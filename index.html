@@ -7,10 +7,11 @@
   </head>
 
   <body>
-    <div class="container">
+    <!-- <div class="container">
       <div id="loader-comment">Комментарии загружаются...</div>
       <ul id="list" class="comments"></ul>
       <div id="add-loader-comment">Комментарий добавляется...</div>
+      <div class="login-alert">Чтобы добавить комментарий, <a href="login.html">авторизуйтесь</a></div>
       <div class="add-form" id="add-form">
         <input id="name-input" type="text" class="add-form-name" placeholder="Введите ваше имя" />
         <textarea id="text-input" type="textarea" class="add-form-text" placeholder="Введите ваш коментарий" rows="4"
@@ -19,20 +20,15 @@
           <button id="comment-button" class="add-form-button">Написать</button>
         </div>
       </div>
+    </div> -->
+    <div class="container" id="app">
+      <div class="loader-comment">Комментарии загружаются...</div>
     </div>
-    <script type="module" src="./main.js"></script>
   </body>
+  <script type="module" src="./main.js"></script>
   <style>
-    .error {
-      background-color: rgb(221, 87, 87);
-    }
     
-    .quote {
-      box-sizing: border-box;
-      background-color: white;
-    }
     
   </style>
-  
     console.log("It works!");
 </html>
