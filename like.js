@@ -6,9 +6,8 @@ export function addLikeEventListeners() {
   likeButtons.forEach((likeButton, index) => {
     likeButton.addEventListener("click", (event) => {
       event.stopPropagation();
-      toggleLike({ id:comments[==index].id }).then(() => {
-        getRender
-        __Comments();
+      toggleLike({ id:comments[index].id }).then(() => {
+        getRenderComments();
       })
     });
   });
