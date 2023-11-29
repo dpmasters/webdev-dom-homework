@@ -43,7 +43,6 @@ export const renderReg = () => {
             login: loginInputElement.value,
             password: passwordInputElement.value,
         }).then((responseData) => {
-            console.log(token);
             setToken(responseData.user.token);
             setUserName(responseData.user.name);
         }).then(() => {

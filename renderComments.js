@@ -2,14 +2,16 @@ import { deleteComment, postApi, token, userName } from "./api.js";
 import { addLikeEventListeners } from "./like.js";
 import { renderLogin } from "./loginPage.js";
 import { formatedDate, getRenderComments } from "./main.js";
+import { format } from "date-fns";
 
 export const renderComments = ({ comments }) => {
   const appHTML = document.getElementById("app");
   const commentsHtml = comments.map((comment, index) => {
+    const apiDate = format(new Date(comment.date), "yyyy-MM-dd hh.mm.ss");
     return `<li class="comment">
         <div class="comment-header">
           <div>${comment.name}</div>
-          <div>${comment.date}</div>
+          <div>${apiDate}</div>
         </div>
         <div class="comment-body"> 
           <div class="comment-text" data-index="${index}">
@@ -57,11 +59,6 @@ export const renderComments = ({ comments }) => {
 
   const addComment = document.getElementById("list");
 
-
-// убирает строку комент добавляется, если расскоментировать не добавляется новый коммент и форма нового коммента
-  //   document.getElementById("add-loader-comment").style.display = 'none';
-
-
   // Добавляем новый комментарий
 function addCommentForm () {
   if (!token) return
@@ -69,9 +66,6 @@ function addCommentForm () {
   const nameInput = document.getElementById("name-input");
   const textInput = document.getElementById("text-input");
   const addLoaderComment = document.getElementById('add-loader-comment');
-
-
-// addLoaderComment.style.display = true; // ??? проверить логику
 
   addCommentButton.addEventListener("click", () => {
 
@@ -107,7 +101,6 @@ function addCommentForm () {
           getRenderComments({ comments });
           document.getElementById("add-form").style.display = 'flex';
           document.getElementById("add-loader-comment").style.display = 'none';
-          // plusLoaderComment.classList.remove("hidden");
           nameInput.value = ""
           textInput.value = ""
         })
@@ -123,7 +116,6 @@ function addCommentForm () {
           else {
             alert("Кажется у вас сломался интернет, попробуйте позже")
           }
-          // TODO: Отправлять в систему сбора ошибок
           console.log(error);
         });
     }
